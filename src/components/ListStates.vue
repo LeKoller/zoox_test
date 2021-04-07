@@ -20,6 +20,9 @@
         </div>
       </div>
     </div>
+    <div v-if="districtList === undefined">
+      <h2>Nenhum estado cadastrado ainda</h2>
+    </div>
   </div>
 </template>
 
@@ -86,16 +89,24 @@ export default {
 
 <style lang="scss" scoped>
 .container {
-  margin-top: 100px;
+  margin-top: 60px;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  width: 100vw;
+  width: 100%;
 
   h1 {
     color: #fff;
     opacity: 60%;
     font-size: 1.4rem;
+    margin-top: 0;
+    margin-bottom: 30px;
+  }
+
+  h2 {
+    color: #fff;
+    opacity: 38%;
+    font-size: 1.2rem;
     margin-top: 0;
     margin-bottom: 30px;
   }

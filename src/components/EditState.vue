@@ -1,5 +1,6 @@
 <template>
   <div class="container">
+    <h1>Editar cidade</h1>
     <form @submit.prevent="">
       <input
         type="text"
@@ -58,10 +59,19 @@ export default {
 
 <style lang="scss" scoped>
 .container {
-  margin-top: 100px;
+  margin-top: 60px;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   width: 100vw;
+
+  h1 {
+    color: #fff;
+    opacity: 60%;
+    font-size: 1.4rem;
+    margin-top: 0;
+    margin-bottom: 30px;
+  }
 
   form {
     display: flex;

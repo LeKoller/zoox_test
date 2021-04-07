@@ -43,7 +43,7 @@ export default {
         .post("http://localhost:4000/states/register", state.creationObject)
         .then((res) => res.data)
         .then((data) => {
-          state.created = data.city;
+          state.created = data.state;
         })
         .catch((err) => {
           console.log(err);
@@ -122,6 +122,9 @@ export default {
 
 h3 {
   margin: 40px 0 0;
+  font-weight: 400;
+  color: #fff;
+  opacity: 60%;
 }
 ul {
   list-style-type: none;

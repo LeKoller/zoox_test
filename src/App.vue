@@ -31,4 +31,20 @@
   color: #42b983;
   opacity: 100%;
 }
+
+::-webkit-scrollbar {
+  width: 20px;
+}
+
+::-webkit-scrollbar-track {
+  background: #080808;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #141414;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #23204e;
+}
 </style>
