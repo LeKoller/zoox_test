@@ -74,7 +74,10 @@ export default {
       store.dispatch("setEditMode", "city");
     };
 
-    onBeforeMount(() => fetchDistricts());
+    onBeforeMount(() => {
+      store.dispatch("setDistricts", {});
+      fetchDistricts();
+    });
 
     return { districtsList, citiesList, fetchCities, editDistrict, editCity };
   },

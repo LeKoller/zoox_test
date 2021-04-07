@@ -14,6 +14,11 @@
         v-model="state.creationObject.abbreviation"
       />
       <button>Registrar</button>
+      <transition class="animate__animated animate__fadeInUp">
+        <div v-if="state.created.name" class="createdBlock">
+          <h3>O estado {{ state.created.name }} foi salvo com sucesso!</h3>
+        </div>
+      </transition>
     </form>
   </div>
 </template>
@@ -30,6 +35,7 @@ export default {
         name: "",
         abbreviation: "",
       },
+      created: {},
     });
 
     const createDistrict = async () => {
@@ -37,11 +43,16 @@ export default {
         .post("http://localhost:4000/states/register", state.creationObject)
         .then((res) => res.data)
         .then((data) => {
-          console.log(data);
+          state.created = data.city;
         })
         .catch((err) => {
           console.log(err);
         });
+
+      state.creationObject.name = "";
+      setInterval(() => {
+        state.created = {};
+      }, 6000);
     };
 
     return { state, createDistrict };

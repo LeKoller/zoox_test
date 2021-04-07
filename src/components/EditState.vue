@@ -15,7 +15,7 @@
       />
       <div>
         <button class="deleteButton" @click="deleteDistrict">
-          Apagar Estado
+          Apagar estado
         </button>
         <button @click="updateDistrict">Salvar</button>
       </div>
