@@ -1,21 +1,21 @@
 <template>
   <div class="container">
     <h1>Estados já cadastrados</h1>
-    <div v-for="state in statesList" :key="state._id">
+    <div v-for="district in districtsList" :key="district._id">
       <h3>
-        <span class="name" @click="goTo">
-          {{ state.name }}
+        <span class="name" @click="editDistrict(district)">
+          {{ district.name }}
         </span>
         -
-        <span class="abbreviation" @click="fetchCities(state._id)">{{
-          state.abbreviation
+        <span class="abbreviation" @click="fetchCities(district._id)">{{
+          district.abbreviation
         }}</span>
       </h3>
       <div class="citiesContainer">
-        <div v-for="city in citiesList[state._id]" :key="city._id">
+        <div v-for="city in citiesList[district._id]" :key="city._id">
           <span class="city">{{ city.name }}</span>
         </div>
-        <div v-if="citiesList[state._id] === 0">
+        <div v-if="citiesList[district._id] === 0">
           <span class="city">Nenhuma cidade cadastrada ainda</span>
         </div>
       </div>
@@ -33,7 +33,7 @@ import store from "../store";
 export default {
   name: "ListStates",
   setup() {
-    const statesList = computed(() => store.state.districts);
+    const districtsList = computed(() => store.state.districts);
     const citiesList = computed(() => store.state.selectedDistricts);
 
     const fetchStates = async () => {
@@ -64,9 +64,14 @@ export default {
       }
     };
 
+    const editDistrict = (district) => {
+      store.dispatch("setTargetDistrict", district);
+      store.dispatch("setEditMode");
+    };
+
     onBeforeMount(() => fetchStates());
 
-    return { statesList, citiesList, fetchCities };
+    return { districtsList, citiesList, fetchCities, editDistrict };
   },
 };
 </script>
@@ -96,6 +101,7 @@ export default {
 
   .name {
     opacity: 87%;
+    cursor: pointer;
   }
 
   .abbreviation {
