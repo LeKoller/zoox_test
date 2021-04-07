@@ -3,7 +3,7 @@
     <h1>Estados já cadastrados</h1>
     <div v-for="state in statesList" :key="state._id">
       <h3>
-        <span class="name">
+        <span class="name" @click="goTo">
           {{ state.name }}
         </span>
         -

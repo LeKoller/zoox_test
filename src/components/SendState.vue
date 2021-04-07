@@ -13,7 +13,7 @@
         placeholder="Abreviação"
         v-model="state.creationObject.abbreviation"
       />
-      <button>Create!</button>
+      <button>Registrar</button>
     </form>
   </div>
 </template>

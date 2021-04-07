@@ -8,9 +8,9 @@
         v-model="state.creationObject.name"
       />
       <select name="stateIdField" v-model="state.creationObject.stateId">
-        <option class="options" value="" disabled selected
-          ><span id="placeholder">Selecione seu estado</span></option
-        >
+        <option class="options" value="" disabled selected>
+          <span id="placeholder">Selecione seu estado</span>
+        </option>
         <option
           class="options"
           v-for="(item, index) in statesList"
@@ -20,7 +20,7 @@
           {{ item.name }}
         </option>
       </select>
-      <button>Create!</button>
+      <button>Registrar</button>
     </form>
   </div>
 </template>

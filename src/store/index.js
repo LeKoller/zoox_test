@@ -4,6 +4,7 @@ export default createStore({
   state: {
     districts: [],
     selectedDistricts: {},
+    editMode: false,
   },
   mutations: {
     SET_DISTRICTS(state, districts) {
@@ -22,6 +23,9 @@ export default createStore({
     SET_NO_CITY_SELECTED_DISTRICT(state, stateId) {
       state.selectedDistricts[stateId] = 0;
     },
+    SET_EDIT_MODE(state) {
+      state.editMode = !state.editMode;
+    },
   },
   actions: {
     setDistricts({ commit }, districts) {
@@ -35,6 +39,9 @@ export default createStore({
     },
     setNoCityOfSelectedDistrict({ commit }, stateId) {
       commit("SET_NO_CITY_SELECTED_DISTRICT", stateId);
+    },
+    setEditMode({ commit }) {
+      commit("SET_EDIT_MODE");
     },
   },
   modules: {},
