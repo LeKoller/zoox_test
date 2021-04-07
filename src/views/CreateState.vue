@@ -1,16 +1,16 @@
 <template>
   <div class="home">
-    <ListStates />
+    <SendState />
   </div>
 </template>
 
 <script>
-import ListStates from "@/components/ListStates";
+import SendState from "@/components/SendState.vue";
 
 export default {
-  name: "Home",
+  name: "CreateState",
   components: {
-    ListStates,
+    SendState,
   },
 };
 </script>

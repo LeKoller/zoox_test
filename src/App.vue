@@ -1,7 +1,8 @@
 <template>
   <div id="nav">
-    <router-link to="/">Create State</router-link> |
-    <router-link to="/about">About</router-link>
+    <router-link to="/">Home</router-link> |
+    <router-link to="/create_state">Cadastrar Estado</router-link> |
+    <router-link to="/create_city">Cadastrar Cidade</router-link>
   </div>
   <router-view />
 </template>

@@ -1,16 +1,16 @@
 <template>
   <div class="home">
-    <ListStates />
+    <SendCity />
   </div>
 </template>
 
 <script>
-import ListStates from "@/components/ListStates";
+import SendCity from "@/components/SendCity.vue";
 
 export default {
-  name: "Home",
+  name: "CreateCity",
   components: {
-    ListStates,
+    SendCity,
   },
 };
 </script>

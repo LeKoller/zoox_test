@@ -1,18 +1,25 @@
 <template>
   <div class="container">
-    <form @submit.prevent="createDistrict">
+    <form @submit.prevent="createCity">
       <input
         type="text"
         name="nameField"
-        placeholder="Nome do estado"
+        placeholder="Nome da cidade"
         v-model="state.creationObject.name"
       />
-      <input
-        type="text"
-        name="abbreviationField"
-        placeholder="Abreviação"
-        v-model="state.creationObject.abbreviation"
-      />
+      <select name="stateIdField" v-model="state.creationObject.stateId">
+        <option class="options" value="" disabled selected
+          ><span id="placeholder">Selecione seu estado</span></option
+        >
+        <option
+          class="options"
+          v-for="(item, index) in statesList"
+          :key="index"
+          :value="item._id"
+        >
+          {{ item.name }}
+        </option>
+      </select>
       <button>Create!</button>
     </form>
   </div>
@@ -20,21 +27,35 @@
 
 <script>
 import axios from "axios";
-import { reactive } from "vue";
+import { reactive, computed } from "vue";
+import { onBeforeMount } from "@vue/runtime-core";
+
+import store from "../store";
 
 export default {
-  name: "SendState",
+  name: "SendCity",
   setup() {
     const state = reactive({
       creationObject: {
         name: "",
-        abbreviation: "",
+        stateId: "",
       },
     });
 
-    const createDistrict = async () => {
+    const statesList = computed(() => store.state.districts);
+
+    const fetchStates = async () => {
       await axios
-        .post("http://localhost:4000/states/register", state.creationObject)
+        .get("http://localhost:4000/states/list")
+        .then((res) => res.data)
+        .then((data) => {
+          store.dispatch("setDistricts", data.states);
+        });
+    };
+
+    const createCity = async () => {
+      await axios
+        .post("http://localhost:4000/cities/register", state.creationObject)
         .then((res) => res.data)
         .then((data) => {
           console.log(data);
@@ -44,7 +65,11 @@ export default {
         });
     };
 
-    return { state, createDistrict };
+    onBeforeMount(() => {
+      fetchStates();
+    });
+
+    return { state, statesList, createCity };
   },
 };
 </script>
@@ -62,7 +87,8 @@ export default {
     width: 100vw;
     align-items: center;
 
-    input {
+    input,
+    select {
       background-color: transparent;
       outline: none;
       border: none;
@@ -77,6 +103,24 @@ export default {
       &:-webkit-autofill:focus,
       &:-webkit-autofill:active {
         background-color: transparent;
+      }
+
+      #placeholder {
+        color: #fff;
+        opacity: 38%;
+      }
+    }
+
+    .options {
+      background-color: #101010;
+      color: #fff;
+      outline: none;
+      border: none;
+
+      &:hover {
+        background: #1e1e1e;
+        color: #fff;
+        opacity: 38%;
       }
     }
 
