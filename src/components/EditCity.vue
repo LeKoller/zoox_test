@@ -1,48 +1,42 @@
 <template>
   <div class="container">
-    <form @submit.prevent="createCity">
+    <form @submit.prevent="">
       <input
         type="text"
         name="nameField"
         placeholder="Nome da cidade"
-        v-model="state.creationObject.name"
+        v-model="state.name"
       />
-      <select name="stateIdField" v-model="state.creationObject.stateId">
+      <select name="stateIdField" v-model="state.stateId">
         <option class="options" value="" disabled selected>
           <span id="placeholder">Selecione seu estado</span>
         </option>
         <option
           class="options"
-          v-for="(item, index) in statesList"
+          v-for="(item, index) in districts"
           :key="index"
           :value="item._id"
         >
           {{ item.name }}
         </option>
       </select>
-      <button>Registrar</button>
+      <button @click="updateCity">Registrar</button>
+      <button class="deleteButton">Apagar cidade</button>
     </form>
   </div>
 </template>
 
 <script>
+import { reactive, computed, onBeforeMount } from "vue";
 import axios from "axios";
-import { reactive, computed } from "vue";
-import { onBeforeMount } from "@vue/runtime-core";
-
 import store from "../store";
 
 export default {
-  name: "SendCity",
+  name: "EditState",
   setup() {
-    const state = reactive({
-      creationObject: {
-        name: "",
-        stateId: "",
-      },
-    });
+    const state = reactive(store.state.targetCity);
 
-    const statesList = computed(() => store.state.districts);
+    const districts = computed(() => store.state.districts);
 
     const fetchDistricts = async () => {
       await axios
@@ -53,23 +47,20 @@ export default {
         });
     };
 
-    const createCity = async () => {
+    const updateCity = async () => {
       await axios
-        .post("http://localhost:4000/cities/register", state.creationObject)
+        .put(`http://localhost:4000/cities/edit/${state._id}`, state)
         .then((res) => res.data)
-        .then((data) => {
-          console.log(data);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
+        .then((data) => console.log(data));
+
+      store.dispatch("setEditMode", "city");
     };
 
     onBeforeMount(() => {
       fetchDistricts();
     });
 
-    return { state, statesList, createCity };
+    return { state, districts, updateCity };
   },
 };
 </script>
@@ -151,20 +142,5 @@ export default {
       }
     }
   }
-}
-
-h3 {
-  margin: 40px 0 0;
-}
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-li {
-  display: inline-block;
-  margin: 0 10px;
-}
-a {
-  color: #42b983;
 }
 </style>

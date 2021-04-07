@@ -13,7 +13,7 @@
       </h3>
       <div class="citiesContainer">
         <div v-for="city in citiesList[district._id]" :key="city._id">
-          <span class="city">{{ city.name }}</span>
+          <span class="city" @click="editCity(city)">{{ city.name }}</span>
         </div>
         <div v-if="citiesList[district._id] === 0">
           <span class="city">Nenhuma cidade cadastrada ainda</span>
@@ -36,7 +36,7 @@ export default {
     const districtsList = computed(() => store.state.districts);
     const citiesList = computed(() => store.state.selectedDistricts);
 
-    const fetchStates = async () => {
+    const fetchDistricts = async () => {
       await axios
         .get("http://localhost:4000/states/list")
         .then((res) => res.data)
@@ -66,12 +66,17 @@ export default {
 
     const editDistrict = (district) => {
       store.dispatch("setTargetDistrict", district);
-      store.dispatch("setEditMode");
+      store.dispatch("setEditMode", "district");
     };
 
-    onBeforeMount(() => fetchStates());
+    const editCity = (city) => {
+      store.dispatch("setTargetCity", city);
+      store.dispatch("setEditMode", "city");
+    };
 
-    return { districtsList, citiesList, fetchCities, editDistrict };
+    onBeforeMount(() => fetchDistricts());
+
+    return { districtsList, citiesList, fetchCities, editDistrict, editCity };
   },
 };
 </script>
@@ -115,6 +120,7 @@ export default {
     .city {
       color: #fff;
       opacity: 38%;
+      cursor: pointer;
     }
   }
 }

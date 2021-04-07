@@ -34,7 +34,7 @@ export default {
         .then((res) => res.data)
         .then((data) => console.log(data));
 
-      store.dispatch("setEditMode");
+      store.dispatch("setEditMode", "district");
     };
 
     return { state, updateDistrict };
