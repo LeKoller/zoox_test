@@ -22,6 +22,11 @@
       </select>
       <button>Registrar</button>
     </form>
+    <transition class="animate__animated animate__fadeInUp">
+      <div v-if="state.created.name" class="createdBlock">
+        <h3>Cidade de {{ state.created.name }} salva com sucesso!</h3>
+      </div>
+    </transition>
   </div>
 </template>
 
@@ -40,6 +45,7 @@ export default {
         name: "",
         stateId: "",
       },
+      created: {},
     });
 
     const statesList = computed(() => store.state.districts);
@@ -58,11 +64,16 @@ export default {
         .post("http://localhost:4000/cities/register", state.creationObject)
         .then((res) => res.data)
         .then((data) => {
-          console.log(data);
+          state.created = data.city;
         })
         .catch((err) => {
           console.log(err);
         });
+
+      state.creationObject.name = "";
+      setInterval(() => {
+        state.created = {};
+      }, 6000);
     };
 
     onBeforeMount(() => {
@@ -78,6 +89,7 @@ export default {
 .container {
   margin-top: 100px;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   width: 100vw;
 
@@ -155,6 +167,9 @@ export default {
 
 h3 {
   margin: 40px 0 0;
+  font-weight: 400;
+  color: #fff;
+  opacity: 60%;
 }
 ul {
   list-style-type: none;

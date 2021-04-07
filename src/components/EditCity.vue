@@ -20,8 +20,10 @@
           {{ item.name }}
         </option>
       </select>
-      <button @click="updateCity">Registrar</button>
-      <button class="deleteButton">Apagar cidade</button>
+      <div>
+        <button class="deleteButton" @click="deleteCity">Apagar cidade</button>
+        <button @click="updateCity">Registrar</button>
+      </div>
     </form>
   </div>
 </template>
@@ -56,11 +58,20 @@ export default {
       store.dispatch("setEditMode", "city");
     };
 
+    const deleteCity = async () => {
+      await axios
+        .delete(`http://localhost:4000/cities/delete/${state._id}`)
+        .then((res) => res.data)
+        .then((data) => console.log(data));
+
+      store.dispatch("setEditMode", "city");
+    };
+
     onBeforeMount(() => {
       fetchDistricts();
     });
 
-    return { state, districts, updateCity };
+    return { state, districts, updateCity, deleteCity };
   },
 };
 </script>
@@ -139,6 +150,14 @@ export default {
         color: dimgray;
         transform: scale(1, 1);
         cursor: default;
+      }
+    }
+    .deleteButton {
+      background-color: #7067ed;
+      margin-right: 20px;
+
+      &:hover {
+        color: #501111;
       }
     }
   }

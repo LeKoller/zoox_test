@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <form @submit.prevent="updateDistrict">
+    <form @submit.prevent="">
       <input
         type="text"
         name="nameField"
@@ -13,7 +13,12 @@
         placeholder="Abreviação"
         v-model="state.abbreviation"
       />
-      <button>Salvar</button>
+      <div>
+        <button class="deleteButton" @click="deleteDistrict">
+          Apagar Estado
+        </button>
+        <button @click="updateDistrict">Salvar</button>
+      </div>
     </form>
   </div>
 </template>
@@ -37,7 +42,16 @@ export default {
       store.dispatch("setEditMode", "district");
     };
 
-    return { state, updateDistrict };
+    const deleteDistrict = async () => {
+      await axios
+        .delete(`http://localhost:4000/states/delete/${state._id}`)
+        .then((res) => res.data)
+        .then((data) => console.log(data));
+
+      store.dispatch("setEditMode", "district");
+    };
+
+    return { state, updateDistrict, deleteDistrict };
   },
 };
 </script>
@@ -97,6 +111,14 @@ export default {
         color: dimgray;
         transform: scale(1, 1);
         cursor: default;
+      }
+    }
+    .deleteButton {
+      background-color: #7067ed;
+      margin-right: 20px;
+
+      &:hover {
+        color: #501111;
       }
     }
   }
