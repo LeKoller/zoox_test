@@ -20,9 +20,6 @@
         </div>
       </div>
     </div>
-    <div v-if="districtList === undefined">
-      <h2>Nenhum estado cadastrado ainda</h2>
-    </div>
   </div>
 </template>
 
